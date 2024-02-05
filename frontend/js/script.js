@@ -6,18 +6,29 @@ const fetchTasks = async () =>{
     return tasks;
 }
 
-const createElement = (tag, innerText = '') =>{
-    const element = document.createElement(tag);
-    element.innerText = innerText;
-    return element;
+const createSelect = (value) =>{
+    const options = `
+        <option value="pendente">pendente</option>
+        <option value="em-andamento">em andamento</option>
+        <option value="concluida">concluída</option>
+    `;
+    const select = createElement('select', '', options);
+    select.value = value;
+    return select;
+
 }
 
-const task = {
-    id: 2,
-    title : 'Terminar o FrontEnd da TodoList',
-    created_at : '02 de fevereiro de 2024 13:51',
-    status: 'pendente'
+const createElement = (tag, innerText = '', innerHTML = '') =>{
+    const element = document.createElement(tag);
 
+    if(innerText){
+        element.innerText = innerText;
+    }
+    if(innerHTML){
+        element.innerHTML = innerHTML;
+    }
+    
+    return element;
 }
 
 const createRow = (task) => {
@@ -28,13 +39,25 @@ const createRow = (task) => {
 
     const tdTitle = createElement('td', title);
     const tdCreatedAt = createElement('td', created_at);
-    const tdStatus = createElement('td', status);
+    const tdStatus = createElement('td');
+    const tdActions = createElement('td');
 
+    const editButton = createElement('button', '', '<span class="material-symbols-outlined">edit</span>');
+    const delButton = createElement('button', '', '<span class="material-symbols-outlined">delete</span>');
+    
+    const select = createSelect(status);
+    
+    editButton.classList.add('btn-action');
+    delButton.classList.add('btn-action');
+    
+    tdActions.appendChild(editButton);
+    tdActions.appendChild(delButton);
+    tdStatus.appendChild(select);
     tr.appendChild(tdTitle);
+
     tr.appendChild(tdCreatedAt);
-    tr.appendChild(tdS);
+    tr.appendChild(tdStatus);
+    tr.appendChild(tdActions);
     tbody.appendChild(tr);    
 
 }
-
-//createRow(task);
