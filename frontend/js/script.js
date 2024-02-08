@@ -24,8 +24,14 @@ const addTask = async (event) =>{
     loadTasks();
 }
 
-const deleteTask = async () =>{
-    
+const deleteTask = async (id) =>{
+    //alert('delete task: ' + id);
+
+    await fetch(`http://localhost:3333/tasks/${id}`, {
+        method: 'delete',
+    });
+
+    loadTasks();
 }
 
 const formatDate = (dateUTC) =>{
@@ -78,7 +84,9 @@ const createRow = (task) => {
     const select = createSelect(status);
     
     editButton.classList.add('btn-action');
+
     delButton.classList.add('btn-action');
+    delButton.addEventListener('click', () => deleteTask(id));
     
     tdActions.appendChild(editButton);
     tdActions.appendChild(delButton);
