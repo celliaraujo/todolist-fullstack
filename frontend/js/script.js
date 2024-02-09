@@ -103,12 +103,14 @@ const createRow = (task) => {
 
     editForm.appendChild(editInput);
 
+    editForm.addEventListener('submit', (event) =>{
+        event.preventDefault();
+        updateTask( {id, title: editInput.value, status} );
+    });
+
     editButton.addEventListener('click', () =>{
         tdTitle.innerText = '';
-        tdTitle.appendChild(editForm);
-        
-        
-
+        tdTitle.appendChild(editForm);         
     });
     
     editButton.classList.add('btn-action');
